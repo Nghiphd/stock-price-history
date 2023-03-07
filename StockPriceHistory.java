@@ -1,5 +1,6 @@
 import yahoofinance.*;
 import java.util.Calendar;
+import yahoofinance.histquotes.Interval;
 
 /**
  * Retrieve historical stock prices
@@ -9,14 +10,18 @@ public class StockPriceHistory
 
     private final String TICKER = "GOOG";
     Calendar rightNow = Calendar.getInstance();
-
+    Interval interval = Interval.DAILY;
     /**
      * Retrieve the stock price data
      */
     public void run() {
         try {
-            Stock stock = YahooFinance.get(TICKER, formatDate(Calendar.getInstance()));
-            System.out.println(stock);
+            Calendar from = Calendar.getInstance();
+            Calendar to = Calendar.getInstance(); 
+            from.add(Calendar.DAY_OF_MONTH, -1); // from 5 years ago
+
+            Stock stock = YahooFinance.get(TICKER, Interval.DAILY);
+            System.out.println(stock.getHistory());
         } catch (Exception e) {
             System.out.println("Error in stock call");    
         }
