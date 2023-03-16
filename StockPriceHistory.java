@@ -1,6 +1,7 @@
 import yahoofinance.*;
 import java.util.Calendar;
 import yahoofinance.histquotes.Interval;
+import yahoofinance.histquotes.HistoricalQuote;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
