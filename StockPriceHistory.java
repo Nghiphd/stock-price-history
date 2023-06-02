@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Retrieve historical stock prices
@@ -21,13 +22,17 @@ public class StockPriceHistory
     public void run() {
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
-        from.add(Calendar.YEAR,-1);
+        from.add(Calendar.MONTH,-1);
         String at = formatDate(from);
-        try {
+        Map<String,BigDecimal> bruh = new HashMap<String,BigDecimal>();
 
-            Stock google = YahooFinance.get("GOOG");
-            List<HistoricalQuote> googleHistQuotes = google.getHistory(from, to, Interval.DAILY);
-            
+        try {
+            Stock stock = YahooFinance.get(TICKER, from, to, Interval.DAILY);
+            List<HistoricalQuote> googQuote = stock.getHistory(from, to, Interval.DAILY);
+            for(HistoricalQuote quote: googQuote) {
+                BigDecimal googClose = quote.getClose();
+                bruh.put(TICKER,googClose);
+            }
         } catch (Exception e) {
             System.out.println("Error in stock call");    
         }
