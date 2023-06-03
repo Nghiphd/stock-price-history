@@ -24,14 +24,14 @@ public class StockPriceHistory
         Calendar to = Calendar.getInstance();
         from.add(Calendar.MONTH,-1);
         String at = formatDate(from);
-        Map<String,BigDecimal> bruh = new HashMap<String,BigDecimal>();
+        Map<String,BigDecimal> bruh = new HashMap<>();
 
         try {
             Stock stock = YahooFinance.get(TICKER, from, to, Interval.DAILY);
             List<HistoricalQuote> googQuote = stock.getHistory(from, to, Interval.DAILY);
             for(HistoricalQuote quote: googQuote) {
                 BigDecimal googClose = quote.getClose();
-                bruh.put(TICKER,googClose);
+                bruh.put(formatDate(quote.getDate()),googClose);
             }
         } catch (Exception e) {
             System.out.println("Error in stock call");    
