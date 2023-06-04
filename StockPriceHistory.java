@@ -27,11 +27,17 @@ public class StockPriceHistory
         Map<String,BigDecimal> bruh = new HashMap<>();
 
         try {
-            Stock stock = YahooFinance.get(TICKER, from, to, Interval.DAILY);
+            Stock stock = YahooFinance.get(TICKER, true);
             List<HistoricalQuote> googQuote = stock.getHistory(from, to, Interval.DAILY);
             for(HistoricalQuote quote: googQuote) {
                 BigDecimal googClose = quote.getClose();
                 bruh.put(formatDate(quote.getDate()),googClose);
+            }
+
+            for (Map.Entry<String, BigDecimal> entry : bruh.entrySet()) {
+                String date = entry.getKey();
+                BigDecimal close = entry.getValue();
+                System.out.println(date +" "+ close);
             }
         } catch (Exception e) {
             System.out.println("Error in stock call");    
