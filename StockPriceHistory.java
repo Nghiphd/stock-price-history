@@ -40,7 +40,7 @@ public class StockPriceHistory
                 System.out.println(date +" "+ close);
             }
         } catch (Exception e) {
-            System.out.println("Error in stock call");    
+            e.printStackTrace();    
         }
     }
 
